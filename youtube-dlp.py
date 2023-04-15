@@ -11,13 +11,13 @@ def get_user_input():
     while True:
         answer = input("Please enter a selection: ")
         if answer in ['1', '2']:
-            return answer()
+            return answer
         print("Invalid entry: Enter only 1 or 2\n")
 
 def validate_playlist():
     while True:
         playlist = input("Is this a playlist? (y/n): ")
-        if playlist in ['y','n']
+        if playlist in ['y','n']:
             return playlist
         print("Invalid entry: Enter only (y/n)\n")
 
@@ -27,13 +27,13 @@ def download_video():
     url = input("Enter the video url: ")
     playlist = validate_playlist()
     location = input("Enter the location to save the video: ")
-    path = os.path.join(os.path.expanduser("~") + f"/Desktop/{location}/")
+    path = os.path.join(os.path.expanduser("~") + f"/{location}/")
     ydl_opts = {
         "outtmpl": f"{path}%(title)s.%(ext)s"
     }
     if playlist == 'y':
         ydl_opts["playlistreverse"] = True
-    with YoutubeDL as ydl:
+    with YoutubeDL (ydl_opts) as ydl:
         try:
             ydl.download([url])
             print("Download complete!")
@@ -46,9 +46,9 @@ def download_audio():
     url = input("Enter the video url: ")
     playlist = validate_playlist()
     location = input("Enter the location to save the mp3: ")
-    path = os.path.join(os.path.expanduser("~") + f"/Desktop/{location}/")
+    path = os.path.join(os.path.expanduser("~") + f"/{location}/")
     ydl_opts = {
-        "outtmpl": f"{path}%(title)s.%(ext)s"
+        "outtmpl": f"{path}%(title)s.%(ext)s",
         "format": "bestaudio/best",
         "extractaudio": True,
         "noplaylist": False,
@@ -63,7 +63,7 @@ def download_audio():
         ydl_opts["noplaylist"] = False
     else:
         ydl_opts["noplaylist"] = True
-    with YoutubeDL as ydl:
+    with YoutubeDL (ydl_opts) as ydl:
         try:
             ydl.download([url])
             print("Download complete!")
